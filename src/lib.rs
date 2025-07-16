@@ -138,11 +138,7 @@ fn inline_wgsl(input: TokenStream) -> Result<TokenStream, TokenStream> {
 pub fn wgsl(input: TokenStream1) -> TokenStream1 {
     //rust analyzer is broken for proc_macro_span
     //https://github.com/rust-lang/rust-analyzer/issues/17193
-    let is_rust_analyzer = Span::call_site()
-        .source_file()
-        .path()
-        .into_os_string()
-        .is_empty();
+    let is_rust_analyzer = Span::call_site().local_file().is_none();
 
     if is_rust_analyzer {
         TokenStream1::default()
